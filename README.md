@@ -24,7 +24,7 @@ asndb, _ := goasn.NewDB("ipasn_db.dat")
 asn, _ := asndb.LookupStr("8.8.8.8")
 // => 15169
 
-ip := net.ParseIP("8.8.8.8")
+ip := net.ParseIP("1.1.1.1")
 asn, _ := asndb.LookupIP(ip)
 // => 13335
 ```
