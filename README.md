@@ -28,3 +28,28 @@ ip := net.ParseIP("1.1.1.1")
 asn, _ := asndb.LookupIP(ip)
 // => 13335
 ```
+
+## Performance
+
+Constructing the radix tree is slower than pyasn, but lookups are faster.
+
+```bash
+# benchmark.go
+Loading database from ipasn_20190822.dat...
+Took 1.719656297s
+
+Looking up 10000 addresses (string)
+Took 3.367572ms
+
+Looking up 10000 addresses (net.IP)
+Took 1.631176ms
+```
+
+```bash
+# benchmark.py
+Loading database from ipasn_20190822.dat
+Took 197.402488ms
+
+Looking up 10000 addresses (string)
+Took 9.340981ms
+```
