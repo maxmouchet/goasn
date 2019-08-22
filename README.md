@@ -1,5 +1,8 @@
 # goasn
 
+[![Build Status](https://travis-ci.org/maxmouchet/goasn.svg?branch=master)](https://travis-ci.org/maxmouchet/goasn)
+[![Go Report Card](https://goreportcard.com/badge/github.com/maxmouchet/goasn)](https://goreportcard.com/report/github.com/maxmouchet/goasn)
+
 goasn provides fast lookup of IP addresses to AS numbers from BGP archives.  
 It reads [pyasn](https://github.com/hadiasghari/pyasn) data files and store IP addresses in a radix tree for fast lookups.
 
