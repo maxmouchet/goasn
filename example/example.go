@@ -5,7 +5,7 @@ import (
 	"net"
 	"time"
 
-	goasn "github.com/maxmouchet/goasn/pkg"
+	"github.com/maxmouchet/goasn"
 )
 
 var dbPath = "ipasn_20190822.dat"
