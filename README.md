@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/maxmouchet/goasn.svg?branch=master)](https://travis-ci.org/maxmouchet/goasn)
 [![Go Report Card](https://goreportcard.com/badge/github.com/maxmouchet/goasn)](https://goreportcard.com/report/github.com/maxmouchet/goasn)
+[![GoDoc](https://godoc.org/github.com/maxmouchet/goasn?status.svg)](https://godoc.org/github.com/maxmouchet/goasn) 
 
 goasn provides fast lookup of IP addresses to AS numbers from BGP archives.  
 It supports the following formats:
