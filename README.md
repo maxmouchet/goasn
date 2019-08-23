@@ -4,7 +4,12 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/maxmouchet/goasn)](https://goreportcard.com/report/github.com/maxmouchet/goasn)
 
 goasn provides fast lookup of IP addresses to AS numbers from BGP archives.  
-It reads [pyasn](https://github.com/hadiasghari/pyasn) data files and store IP addresses in a radix tree ([kentik/patricia](https://github.com/kentik/patricia)) for fast lookups.
+It supports the following formats:
+- [x] [pyasn](https://github.com/hadiasghari/pyasn) data files
+- [ ] [Route Views](http://archive.routeviews.org/) `sh ip bgp` format RIBs
+- [ ] [Route Views](http://archive.routeviews.org/) MRT format RIBs
+
+It reads  and store IP addresses in a radix tree ([kentik/patricia](https://github.com/kentik/patricia)) for fast lookups.
 
 ## Quick Start
 
