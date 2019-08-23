@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/maxmouchet/goasn"
+	"github.com/maxmouchet/goasn/goasn"
 )
 
 var addrsPath = "addrs.txt"
