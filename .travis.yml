@@ -4,3 +4,12 @@ before_script:
 - export GO111MODULE="on"
 notifications:
   email: false
+deploy:
+  provider: releases
+  api_key:
+    secure: cM9DDhWzlpQgqMnBD65vnm+83I4Lcb17m1gyIxcP2TagugUGC7dQAGFgYYd737jdjGPxEl5J6cCmsxHvooAcn/3++OZvtR5vCl2OvqIyICzdCnFyz7OqXPQQj/B08r5N6yZP+pAUjkT8umeao61meI0gUxg5uZ29FGbv/PAl0S234nXGYXixAaaBTAjy0iaqOerkqrCxXZfD7ZmzTXB38EyfHKozLnvTIVoDyyYtGUTtRlDHRMZhz8wvwWWd4Bq+/uwuoRKRaiecSZ3jXv/we56BOoAJ6S0LhlFuwFHEFFwNN0S/OYubv7mWpYY0cevp9K3Kj4uluCS0OtDWqZdQF9CsW9Nzwa58CMvZhbekhWn+sozRkkMwTGZiz0YPBJUy1AminOQbqPIUGDNPfDLDRoD9Ki5Rgda2PaEO7nq34HZe/qex2SokDJ7OTmpiuBKLZTq74DtBKXlbzOL4B/Ec5Ki4Ly/NaRAToPRNLslrZDlMPqR4NS+ybqfdU7bkPpuAFGIzYWJpds20THC6Ua+jdaKxBEeoDygzsy7SSYSiPv4GAMr+9LI5gLONi/IZ1ciybhrNY6GI26pawoSS/Eaakbdf7sCuFOqi9G0h+3DrcteziZMLmWNilH7jf7hc3GaQ12tL9Tpa1udM/RiE7QkFtZQVYIR8T4jI1wUxpVHZaVQ=
+  file_glob: true
+  file: goasn*
+  skip_cleanup: true
+  on:
+    tags: true

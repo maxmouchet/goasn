@@ -4,11 +4,11 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/maxmouchet/goasn)](https://goreportcard.com/report/github.com/maxmouchet/goasn)
 [![GoDoc](https://godoc.org/github.com/maxmouchet/goasn?status.svg)](https://godoc.org/github.com/maxmouchet/goasn) 
 
-goasn provides fast lookup of IP addresses to AS numbers from BGP archives.  
+goasn provides fast lookup of IP addresses to IXP and AS numbers from RIB archives.  
 It supports the following  sources:
 - [Route Views](http://archive.routeviews.org/)/[RIS](https://www.ripe.net/analyse/internet-measurements/routing-information-service-ris/routing-information-service-ris) MRT format RIBs
+- [PeeringDB](https://peeringdb.com/) data
 - [pyasn](https://github.com/hadiasghari/pyasn) data files
-- [Peering DB]
 
 It reads  and store IP addresses in a radix tree ([kentik/patricia](https://github.com/kentik/patricia)) for fast lookups.
 
@@ -17,9 +17,11 @@ It reads  and store IP addresses in a radix tree ([kentik/patricia](https://gith
 
 ### CLI
 
+You can download the [latest binary](https://github.com/maxmouchet/goasn/releases) or build goasn by yourself.  
+Building meshmon requires [Go](https://golang.org/dl/) 1.12+.
 ```bash
-wget github...
-go get github.com/maxmouchet/goasn
+git clone https://github.com/maxmouchet/goasn.git
+cd goasn; make
 ```
 
 ```bash
@@ -29,6 +31,10 @@ goasn lookup --db rib.20180801.0800.txt 8.8.8.8
 ```
 
 ### Library
+
+```bash
+go get github.com/maxmouchet/goasn
+```
 
 ```go
 asndb, _ := goasn.NewDB("rib.20180801.0800.txt")
