@@ -1,6 +1,8 @@
 package goasn
 
 import (
+	"errors"
+	"io/ioutil"
 	"net"
 
 	"github.com/kentik/patricia"
@@ -51,6 +53,21 @@ func NewASNTree(prefixes []PrefixOrigin) (*ASNTree, error) {
 	return &db, nil
 }
 
+func NewASNTreeFromFile(path string) (*ASNTree, error) {
+	b, err := ioutil.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+
+	var db ASNDatabase
+	err = db.UnmarshalText(b)
+	if err != nil {
+		return nil, err
+	}
+
+	return NewASNTree(db.Entries)
+}
+
 func NewPrefixOrigin(e RIBEntry) PrefixOrigin {
 	var origin []uint32
 	segment := e.Path[len(e.Path)-1]
@@ -65,4 +82,46 @@ func NewPrefixOrigin(e RIBEntry) PrefixOrigin {
 		Prefix: e.Network,
 		Origin: origin,
 	}
+}
+
+func (t ASNTree) LookupIP(ip net.IP) ([]uint32, error) {
+	if addrV4 := ip.To4(); addrV4 != nil {
+		addr := patricia.NewIPv4AddressFromBytes(addrV4, uint(32))
+		_, asn, err := t.treeV4.FindDeepestTags(addr)
+		return asn, err
+	}
+	if addrV6 := ip.To16(); addrV6 != nil {
+		addr := patricia.NewIPv6Address(addrV6, 128)
+		_, asn, err := t.treeV6.FindDeepestTags(addr)
+		return asn, err
+	}
+	return nil, errors.New("Invalid IP address")
+}
+
+func (t ASNTree) LookupIPMultiple(ips []net.IP) ([][]uint32, error) {
+	asns := make([][]uint32, len(ips))
+	for i, ip := range ips {
+		asn, err := t.LookupIP(ip)
+		if err != nil {
+			return nil, err
+		}
+		asns[i] = asn
+	}
+	return asns, nil
+}
+
+func (t ASNTree) LookupStr(str string) ([]uint32, error) {
+	return t.LookupIP(net.ParseIP(str))
+}
+
+func (t ASNTree) LookupStrMultiple(strs []string) ([][]uint32, error) {
+	asns := make([][]uint32, len(strs))
+	for i, str := range strs {
+		asn, err := t.LookupStr(str)
+		if err != nil {
+			return nil, err
+		}
+		asns[i] = asn
+	}
+	return asns, nil
 }

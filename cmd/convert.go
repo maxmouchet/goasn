@@ -49,8 +49,16 @@ to quickly create a Cobra application.`,
 			db := goasn.ASNDatabase{}
 			err = db.UnmarshalText(b)
 			check(err)
+			fmt.Println(len(db.Entries))
 
-			fmt.Println(db)
+			tree, err := goasn.NewASNTreeFromFile(path + ".txt")
+			check(err)
+			fmt.Println(tree.LookupStr("2001:660:7302:5:6153:a38:4c2d:5b3b"))
+			fmt.Println(tree.LookupStrMultiple([]string{
+				"2001:660:7302:5:6153:a38:4c2d:5b3b",
+				"2001:4860:4860::8888",
+				"2405:9800:b000::1",
+			}))
 		}
 	},
 }

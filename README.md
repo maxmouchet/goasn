@@ -12,6 +12,10 @@ It supports the following  sources:
 
 It reads  and store IP addresses in a radix tree ([kentik/patricia](https://github.com/kentik/patricia)) for fast lookups.
 
+It supports multiple origin ASes in opposition to pyasn [(pyasn#46)](https://github.com/hadiasghari/pyasn/issues/46).
+
+*WIP. The API is not stable*
+
 ## Quick Start
 
 
