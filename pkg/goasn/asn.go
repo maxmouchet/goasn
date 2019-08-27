@@ -19,7 +19,7 @@ type PrefixOrigin struct {
 	Origin []uint32  `json:"origin"`
 }
 
-func NewASNTree(prefixes ASNDatabase) (*ASNTree, error) {
+func NewASNTree(prefixes []PrefixOrigin) (*ASNTree, error) {
 	treeV4 := uint32_tree.NewTreeV4()
 	treeV6 := uint32_tree.NewTreeV6()
 

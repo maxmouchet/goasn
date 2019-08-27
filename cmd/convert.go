@@ -37,11 +37,20 @@ to quickly create a Cobra application.`,
 
 			// json.
 
-			b, err := goasn.ASNDatabase(origins).MarshalText(singleAS)
+			b, err := goasn.ASNDatabase{origins}.MarshalText(singleAS)
 			check(err)
 
 			err = ioutil.WriteFile(path+".txt", b, os.FileMode(0644))
 			check(err)
+
+			b, err = ioutil.ReadFile(path + ".txt")
+			check(err)
+
+			db := goasn.ASNDatabase{}
+			err = db.UnmarshalText(b)
+			check(err)
+
+			fmt.Println(db)
 		}
 	},
 }
