@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/maxmouchet/goasn/pkg/goasn"
+	"github.com/maxmouchet/goasn/pkg/peeringdb"
 
 	"github.com/spf13/cobra"
 )
@@ -25,8 +26,19 @@ to quickly create a Cobra application.`,
 		// TODO: Get bool directly
 		singleAS := cmd.Flag("single-as").Value.String() == "true"
 
+		// TMP
+
+		var db peeringdb.DB
+		err := db.FromAPI()
+		check(err)
+
+		tree, err := goasn.NewIXPTree(db)
+		check(err)
+
+		fmt.Println(tree.LookupStr("8.8.8.8"))
+		fmt.Println(tree.LookupStr("2001:7f8:1::64"))
+
 		for _, path := range args {
-			// goasn.
 			entries, err := goasn.RIBFromMRT(path)
 			log.Println(len(entries), err)
 
@@ -34,8 +46,6 @@ to quickly create a Cobra application.`,
 			for i, entry := range entries {
 				origins[i] = goasn.NewPrefixOrigin(entry)
 			}
-
-			// json.
 
 			b, err := goasn.ASNDatabase{origins}.MarshalText(singleAS)
 			check(err)

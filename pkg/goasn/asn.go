@@ -45,14 +45,15 @@ func NewASNTree(prefixes []PrefixOrigin) (*ASNTree, error) {
 		}
 	}
 
-	db := ASNTree{
+	tree := ASNTree{
 		treeV4: treeV4,
 		treeV6: treeV6,
 	}
 
-	return &db, nil
+	return &tree, nil
 }
 
+// TODO: Detect file type (txt, json, ...)
 func NewASNTreeFromFile(path string) (*ASNTree, error) {
 	b, err := ioutil.ReadFile(path)
 	if err != nil {
