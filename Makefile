@@ -2,7 +2,7 @@
 URL := "https://github.com/maxmouchet/goasn"
 NAME := goasn
 LICENSE := MIT
-VERSION := 0.0.1
+VERSION := $(shell git describe --abbrev=0 --tags | tr -d 'v')
 MAINTAINER := "<max@maxmouchet.com>"
 DESCRIPTION := "Fast offline lookup of IP addresses to IXP and AS numbers from RIB archives."
 
@@ -17,6 +17,7 @@ clean:
 
 .PHONY: release
 release:
+	$(info VERSION = ${VERSION})
 	GOARCH=amd64 GOOS=linux go build -o goasn main.go
 	fpm -s dir -t deb -f --prefix /usr/bin ${FPMFLAGS} goasn
 	fpm -s dir -t rpm -f --prefix /usr/bin ${FPMFLAGS} goasn
