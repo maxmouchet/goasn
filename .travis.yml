@@ -5,6 +5,8 @@ before_script:
 notifications:
   email: false
 before_deploy:
+- sudo apt-get install -y build-essential rpm
+- gem install fpm
 - make release
 deploy:
   provider: releases
