@@ -1,4 +1,4 @@
-package goasn
+package pyasn
 
 import (
 	"bufio"
@@ -12,7 +12,7 @@ import (
 
 type PyASNEntry struct {
 	IPNet net.IPNet
-	ASN   uint32
+	ASNs  []uint32
 }
 
 var linePattern = regexp.MustCompile(`^(.+?)\t(\d+)$`)
@@ -35,7 +35,7 @@ func parseLine(line string) (*PyASNEntry, error) {
 
 	entry := PyASNEntry{
 		IPNet: *ipn,
-		ASN:   uint32(asn),
+		ASNs:  []uint32{uint32(asn)},
 	}
 
 	return &entry, nil
@@ -66,4 +66,37 @@ func ReadPyASNDatabase(path string) ([]PyASNEntry, error) {
 	}
 
 	return entries, nil
+}
+
+func WritePyASNDatabase(path string, entries []PyASNEntry) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	w := bufio.NewWriter(file)
+
+	w.WriteString("; IP-ASN32-DAT file\n")
+	w.WriteString("; Extended version with multiple ASes\n")
+	w.WriteString(";\n")
+
+	lastNet := ""
+
+	// WARN if same prefix with differents ASes
+
+	for _, entry := range entries {
+		if entry.IPNet.String() == lastNet {
+			continue
+		}
+		lastNet = entry.IPNet.String()
+		fmt.Fprintf(
+			w,
+			"%s\t%d\n",
+			entry.IPNet.String(),
+			entry.ASNs,
+		)
+	}
+
+	return nil
 }

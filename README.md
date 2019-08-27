@@ -5,27 +5,33 @@
 [![GoDoc](https://godoc.org/github.com/maxmouchet/goasn?status.svg)](https://godoc.org/github.com/maxmouchet/goasn) 
 
 goasn provides fast lookup of IP addresses to AS numbers from BGP archives.  
-It supports the following formats:
-- [x] [pyasn](https://github.com/hadiasghari/pyasn) data files
-- [ ] [Route Views](http://archive.routeviews.org/) `sh ip bgp` format RIBs
-- [ ] [Route Views](http://archive.routeviews.org/) MRT format RIBs
+It supports the following  sources:
+- [Route Views](http://archive.routeviews.org/)/[RIS](https://www.ripe.net/analyse/internet-measurements/routing-information-service-ris/routing-information-service-ris) MRT format RIBs
+- [pyasn](https://github.com/hadiasghari/pyasn) data files
+- [Peering DB]
 
 It reads  and store IP addresses in a radix tree ([kentik/patricia](https://github.com/kentik/patricia)) for fast lookups.
 
 ## Quick Start
 
+
+### CLI
+
 ```bash
+wget github...
 go get github.com/maxmouchet/goasn
 ```
 
-From [pyasn](https://github.com/hadiasghari/pyasn) documentation:
 ```bash
-pyasn_util_download.py --latest
-pyasn_util_convert.py --single <Downloaded RIB File> <ipasn_db_file_name>
+goasn download --collector route-views.amsix.routeviews.org --date 2019-08-01T08:00
+goasn convert rib.20190801.0800.bz2
+goasn lookup --db rib.20180801.0800.txt 8.8.8.8
 ```
 
+### Library
+
 ```go
-asndb, _ := goasn.NewDB("ipasn_db.dat")
+asndb, _ := goasn.NewDB("rib.20180801.0800.txt")
 
 asn, _ := asndb.LookupStr("8.8.8.8")
 // => 15169
