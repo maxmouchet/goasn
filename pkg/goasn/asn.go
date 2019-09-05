@@ -53,20 +53,22 @@ func NewASNTree(prefixes []PrefixOrigin) (*ASNTree, error) {
 	return &tree, nil
 }
 
+func NewASNTreeFromText(b []byte) (*ASNTree, error) {
+	var db ASNDatabase
+	err := db.UnmarshalText(b)
+	if err != nil {
+		return nil, err
+	}
+	return NewASNTree(db.Entries)
+}
+
 // TODO: Detect file type (txt, json, ...)
 func NewASNTreeFromFile(path string) (*ASNTree, error) {
 	b, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
-
-	var db ASNDatabase
-	err = db.UnmarshalText(b)
-	if err != nil {
-		return nil, err
-	}
-
-	return NewASNTree(db.Entries)
+	return NewASNTreeFromText(b)
 }
 
 func NewPrefixOrigin(e RIBEntry) PrefixOrigin {
